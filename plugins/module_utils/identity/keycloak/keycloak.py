@@ -2554,7 +2554,9 @@ class KeycloakAPI(object):
                 open_url(
                     user_url,
                     method='GET',
-                    headers=self.restheaders))
+                    headers=self.restheaders,
+                    validate_certs=self.validate_certs,
+                    timeout=self.connection_timeout))
             return userrep
         except Exception as e:
             self.module.fail_json(msg='Could not get user %s in realm %s: %s'
@@ -2577,7 +2579,9 @@ class KeycloakAPI(object):
             open_url(users_url,
                      method='POST',
                      headers=self.restheaders,
-                     data=json.dumps(userrep))
+                     data=json.dumps(userrep),
+                     validate_certs=self.validate_certs,
+                     timeout=self.connection_timeout)
             created_user = self.get_user_by_username(
                 username=userrep['username'],
                 realm=realm)
@@ -2621,7 +2625,9 @@ class KeycloakAPI(object):
                 user_url,
                 method='PUT',
                 headers=self.restheaders,
-                data=json.dumps(userrep))
+                data=json.dumps(userrep),
+                validate_certs=self.validate_certs,
+                timeout=self.connection_timeout)
             updated_user = self.get_user_by_id(
                 user_id=userrep['id'],
                 realm=realm)
@@ -2645,7 +2651,9 @@ class KeycloakAPI(object):
             return open_url(
                 user_url,
                 method='DELETE',
-                headers=self.restheaders)
+                headers=self.restheaders,
+                validate_certs=self.validate_certs,
+                timeout=self.connection_timeout)
         except Exception as e:
             self.module.fail_json(msg='Could not delete user %s in realm %s: %s'
                                       % (user_id, realm, str(e)))
@@ -2667,7 +2675,9 @@ class KeycloakAPI(object):
                 open_url(
                     user_groups_url,
                     method='GET',
-                    headers=self.restheaders))
+                    headers=self.restheaders,
+                    validate_certs=self.validate_certs,
+                    timeout=self.connection_timeout))
             for user_group in user_groups:
                 groups.append(user_group["name"])
             return groups
@@ -2692,7 +2702,9 @@ class KeycloakAPI(object):
             return open_url(
                 user_group_url,
                 method='PUT',
-                headers=self.restheaders)
+                headers=self.restheaders,
+                validate_certs=self.validate_certs,
+                timeout=self.connection_timeout)
         except Exception as e:
             self.module.fail_json(msg='Could not add user %s in group %s in realm %s: %s'
                                       % (user_id, group_id, realm, str(e)))
@@ -2714,7 +2726,9 @@ class KeycloakAPI(object):
             return open_url(
                 user_group_url,
                 method='DELETE',
-                headers=self.restheaders)
+                headers=self.restheaders,
+                validate_certs=self.validate_certs,
+                timeout=self.connection_timeout)
         except Exception as e:
             self.module.fail_json(msg='Could not remove user %s from group %s in realm %s: %s'
                                       % (user_id, group_id, realm, str(e)))
